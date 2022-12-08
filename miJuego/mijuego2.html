@@ -1,0 +1,70 @@
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<!-- durante la carga se ejecuta dibujarcanvas -->
+<body onload="dibujarCanvas()">
+    
+<canvas id="CanvasG" width="600" height="400"></canvas>
+<script>
+    /**
+    control de personaje con teclado
+    */
+    
+    let canvasC=document.getElementById('CanvasG');
+    let pant=canvasC.getContext("2d");
+    let anchoPantalla =600,altoPantalla=400;
+    let teclaP=0;
+    let sprite=new Image();
+    sprite.src="ash.png";
+    let indiceX=0,indiceY=0;
+    let ashX=0,ashY=0;
+    //sub proceso
+    function dibujarCanvas(){
+        console.log("dibuja");
+        pant.fillStyle='black';
+        pant.fillRect(0,0,anchoPantalla,altoPantalla);
+        pant.fillStyle="white";
+        pant.font='italic bold 18pt Times New Roman';
+        pant.fillText("Tecla Presionada "+ teclaP +",X: "+ashX+" Y: "+ashY,10,30,(anchoPantalla-10));
+        pant.drawImage(sprite,indiceX*32,indiceY*32,32,32,ashX,ashY,64,64);
+        indiceX=indiceX+1;
+        if(indiceX>4){
+            indiceX=0;
+        }
+        if(ashX<1){ashX=0;}
+        if(ashX>550){ashX=550;}
+        if(ashY<1){ashY=0;}
+        if(ashY>330){ashY=330;}
+        setTimeout("dibujarCanvas();",300)
+    }
+    document.onkeyup=function(event){
+        console.log(window.event.keyCode);
+        if(event===null){
+            teclaP=window.event.keyCode;
+        }else{
+            teclaP=event.keyCode;
+        }
+        switch(teclaP){
+            //abajo 40
+            case 40:
+                ashY=ashY+10;
+                indiceY=0;
+                break;
+            //izquierda
+            case 37:
+                ashX=ashX-10;
+                indiceY=1;
+                break;
+            //arriba
+            case 38:
+                ashY=ashY-10;
+                indiceY=2;
+                break;
+            case 39:
+                ashX=ashX+10
+                indiceY=3;
+                break;
+            default:
+                break;
+        }
+    }
+</script>
+</body>
