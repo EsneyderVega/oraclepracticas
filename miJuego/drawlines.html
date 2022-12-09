@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<canvas style="border-style: solid;background-color:black;" id="lienzo" width="400" height="400"></canvas>
+<br>
+<br><br><br>
+<label for="linea">Escriba un valor entre 1 y 200 <br> Despues presione enter</label>
+<input  type="number" max="200" min="1" id="linea">
+<br><br>
+<p>para ver la animacion seleccione el recuadro y presione la tecla arriba <br> cuando el valor sea 200 presione la tecla abajo</p>
+
+<script>
+    document.getElementById("linea").addEventListener("change",function(){
+        let valor=document.getElementById("linea").value;
+        if(valor>0 && valor<=200){
+            dibujar(valor);
+        }else{
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Error en el valor ingresado!'
+            })
+        }
+        
+    })
+
+    function dibujar(lineas){
+        console.log("cambio")
+        const lienzo = document.getElementById('lienzo');
+        lienzo.width = 400;
+        lienzo.height = 400;
+        var ctx = lienzo.getContext("2d");
+        const colores=['#47D544','#4487D5','#B23DE5','#3DE5CD','#C4ED15','#E64CB0','#E6504C','#6DF70B','#0BDCF7','#AF0000','#FFF']
+        ctx.beginPath();
+        ctx.moveTo(200, 0);
+        ctx.lineTo(200, 400);
+        ctx.moveTo(0, 200);
+        ctx.lineTo(400, 200);
+        ctx.strokeStyle='white';
+        ctx.stroke();
+        let col;
+        for(let i=1;i<200;i+=parseInt(lineas)){
+            col = Math.round(Math.random()*colores.length);
+            //superior derecha central 
+            ctx.beginPath();
+            ctx.moveTo(400-i, 200);
+            ctx.lineTo(200, 200-i);
+            ctx.strokeStyle=colores[col]
+            ctx.stroke();
+            //superior izquierda central
+            ctx.beginPath();
+            ctx.moveTo(200, 200-i);
+            ctx.lineTo(0+i, 200);
+            ctx.strokeStyle=colores[col]
+            ctx.stroke();
+            //inferior derecha central
+            ctx.beginPath();
+            ctx.moveTo(200, 200+i);
+            ctx.lineTo(400-i, 200);
+            ctx.strokeStyle=colores[col]
+            ctx.stroke();
+            //inferior izquierda central
+            ctx.beginPath();
+            ctx.moveTo(200, 200+i);
+            ctx.lineTo(0+i, 200);
+            ctx.strokeStyle=colores[col]
+            ctx.stroke();
+            //esquina superior izquierda
+            ctx.beginPath();
+            ctx.moveTo(0+i, 0);
+            ctx.lineTo(0, 200-i);
+            ctx.strokeStyle=colores[col]
+            ctx.stroke();
+            //esquina superior derecha
+            ctx.beginPath();
+            ctx.moveTo(400-i, 0);
+            ctx.lineTo(400, 200-i);
+            ctx.strokeStyle=colores[col]
+            ctx.stroke();
+            //esquina inferior derecha
+            ctx.beginPath();
+            ctx.moveTo(200+i, 400);
+            ctx.lineTo(400, 400-i);
+            ctx.strokeStyle=colores[col]
+            ctx.stroke();
+            //esquina inferior izquierda
+            ctx.beginPath();
+            ctx.moveTo(0, 200+i);
+            ctx.lineTo(0+i, 400);
+            ctx.strokeStyle=colores[col]
+            ctx.stroke();
+    }
+
+}
+dibujar(1);
+</script>    
+</body>
+</html>
+
+
