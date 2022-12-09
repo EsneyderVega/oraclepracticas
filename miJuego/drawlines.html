@@ -5,10 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- libreria de mensajes adornados -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <!-- la etiqueta style permite agregar estilo a una etiqueta directamente  -->
 <canvas style="border-style: solid;background-color:black;" id="lienzo" width="400" height="400"></canvas>
 <br>
 <br><br><br>
@@ -18,11 +20,15 @@
 <p>para ver la animacion seleccione el recuadro y presione la tecla arriba <br> cuando el valor sea 200 presione la tecla abajo</p>
 
 <script>
+    //escucha del evento change (cambio) del input 
     document.getElementById("linea").addEventListener("change",function(){
         let valor=document.getElementById("linea").value;
         if(valor>0 && valor<=200){
             dibujar(valor);
         }else{
+            /**
+            Swal.fire llama el mensaje con parametros icon, titulo y texto 
+            */
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -31,24 +37,30 @@
         }
         
     })
-
+    /**
+    * @param {number} lineas el factor de aumento del ciclo for 
+    */
     function dibujar(lineas){
-        console.log("cambio")
+        //crea la variable lienzo para conectar con el canvas
+
         const lienzo = document.getElementById('lienzo');
-        lienzo.width = 400;
-        lienzo.height = 400;
+        
+        lienzo.width=lienzo.width;
+        //contexto para poder dibujar
         var ctx = lienzo.getContext("2d");
+        //arreglo de colores
         const colores=['#47D544','#4487D5','#B23DE5','#3DE5CD','#C4ED15','#E64CB0','#E6504C','#6DF70B','#0BDCF7','#AF0000','#FFF']
-        ctx.beginPath();
-        ctx.moveTo(200, 0);
-        ctx.lineTo(200, 400);
-        ctx.moveTo(0, 200);
-        ctx.lineTo(400, 200);
-        ctx.strokeStyle='white';
-        ctx.stroke();
-        let col;
+        //dibujo de las lineas centrales
+        ctx.beginPath(); //inicio del contexto
+        ctx.moveTo(200, 0); //desplazamiento al punto 200 en x y 0 en y
+        ctx.lineTo(200, 400);//se dibuja la linea hasta el punto 200 en x y 400 en y 
+        ctx.moveTo(0, 200);//desplazamiento al punto 0 en x y 200 en y
+        ctx.lineTo(400, 200);//se dibuja la linea hasta el punto 400 en x y 200 en y 
+        ctx.strokeStyle='white';//color de dibujo
+        ctx.stroke(); //dibujar
+        let col; //variable para el valor del indice del color
         for(let i=1;i<200;i+=parseInt(lineas)){
-            col = Math.round(Math.random()*colores.length);
+            col = Math.round(Math.random()*(colores.length-1));//calculo aleatorio del indice
             //superior derecha central 
             ctx.beginPath();
             ctx.moveTo(400-i, 200);
@@ -100,7 +112,7 @@
     }
 
 }
-dibujar(1);
+dibujar(1);//llamado inicial al cargar la pagina
 </script>    
 </body>
 </html>
